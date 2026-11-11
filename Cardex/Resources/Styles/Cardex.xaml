@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Estilos próprios do Cardex. As cores vêm de Colors.xaml; nenhum XAML de tela repete cor. -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Textos -->
+    <Style TargetType="Label" x:Key="Titulo">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Secao">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="Margin" Value="0,8,0,0" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Secundario">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+    </Style>
+
+    <!-- Rótulo de campo de formulário -->
+    <Style TargetType="Label" x:Key="Campo">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="OpenSansSemibold" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+    </Style>
+
+    <!-- Mensagem de validação: vermelha, abaixo do campo; some quando o texto está vazio -->
+    <Style TargetType="Label" x:Key="Erro">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource ErroClaro}, Dark={StaticResource ErroEscuro}}" />
+        <Style.Triggers>
+            <Trigger TargetType="Label" Property="Text" Value="">
+                <Setter Property="IsVisible" Value="False" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estado vazio ("Nenhuma coleção encontrada") -->
+    <Style TargetType="Label" x:Key="Vazio">
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="Margin" Value="24,40" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray300}}" />
+    </Style>
+
+    <!-- Cartão: fundo levemente destacado, cantos arredondados -->
+    <Style TargetType="Border" x:Key="Cartao">
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CartaoClaro}, Dark={StaticResource CartaoEscuro}}" />
+    </Style>
+
+    <!-- Botões -->
+    <Style TargetType="Button" x:Key="BotaoSecundario">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+
+    <Style TargetType="Button" x:Key="BotaoPerigo">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource ErroClaro}, Dark={StaticResource ErroEscuro}}" />
+    </Style>
+
+    <!-- Botões grandes da tela inicial (Grid 2x2) -->
+    <Style TargetType="Button" x:Key="Atalho">
+        <Setter Property="HeightRequest" Value="88" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource CartaoClaro}, Dark={StaticResource CartaoEscuro}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+
+    <!-- Itens do menu lateral -->
+    <Style TargetType="Button" x:Key="ItemMenu">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="20,12" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+    </Style>
+
+    <!-- Ações do SwipeView -->
+    <Style TargetType="SwipeItem" x:Key="SwipeEditar">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+    <Style TargetType="SwipeItem" x:Key="SwipeExcluir">
+        <Setter Property="BackgroundColor" Value="{StaticResource ErroClaro}" />
+    </Style>
+
+</ResourceDictionary>
