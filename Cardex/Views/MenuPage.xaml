@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Conteúdo do Flyout (menu lateral). O Title é obrigatório na página do Flyout. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.MenuPage"
+             x:DataType="vm:MenuViewModel"
+             Title="Menu">
+
+    <VerticalStackLayout Padding="0,48,0,0" Spacing="4">
+        <Label Text="Cardex" Style="{StaticResource Titulo}" Margin="20,0,20,4" />
+        <Label Text="Fichário de Pokémon Estampas Ilustradas" Style="{StaticResource Secundario}" Margin="20,0,20,16" />
+
+        <Button Text="Início" Style="{StaticResource ItemMenu}" Command="{Binding IrParaInicioCommand}" />
+        <Button Text="Coleções" Style="{StaticResource ItemMenu}" Command="{Binding IrParaColecoesCommand}" />
+        <Button Text="Minhas cartas" Style="{StaticResource ItemMenu}" Command="{Binding IrParaMinhasCartasCommand}" />
+        <Button Text="Sobre" Style="{StaticResource ItemMenu}" Command="{Binding IrParaSobreCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

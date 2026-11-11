@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Formulário modal (aberto com PushModalAsync). Serve para criar e para editar. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.ColecaoFormPage"
+             x:DataType="vm:ColecaoFormViewModel"
+             Title="{Binding Titulo}">
+
+    <!-- Linha 0: cabeçalho · Linha 1: campos (com rolagem) · Linha 2: botões -->
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Label Grid.Row="0" Text="{Binding Titulo}" Style="{StaticResource Titulo}" Margin="16,24,16,8" />
+
+        <ScrollView Grid.Row="1">
+            <!-- Grid de 2 colunas: campos largos ocupam as duas (ColumnSpan); os totais ficam lado a lado -->
+            <Grid Padding="16,0" ColumnDefinitions="*,*" ColumnSpacing="12"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Nome *" Style="{StaticResource Campo}" />
+                <Entry Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Nome}" Placeholder="Megaevolução — Escuridão Absoluta" />
+                <Label Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding ErroNome}" Style="{StaticResource Erro}" />
+
+                <Label Grid.Row="3" Grid.ColumnSpan="2" Text="Nome em inglês" Style="{StaticResource Campo}" />
+                <Entry Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding NomeIngles}" Placeholder="Pitch Black" />
+
+                <Label Grid.Row="5" Grid.ColumnSpan="2" Text="Código *" Style="{StaticResource Campo}" />
+                <Entry Grid.Row="6" Grid.ColumnSpan="2" Text="{Binding Codigo}" Placeholder="ME05" Keyboard="Plain" />
+                <Label Grid.Row="7" Grid.ColumnSpan="2" Text="{Binding ErroCodigo}" Style="{StaticResource Erro}" />
+
+                <Label Grid.Row="8" Grid.Column="0" Text="Total principal *" Style="{StaticResource Campo}" />
+                <Label Grid.Row="8" Grid.Column="1" Text="Total de cartas *" Style="{StaticResource Campo}" />
+                <Entry Grid.Row="9" Grid.Column="0" Text="{Binding TotalPrincipal}" Keyboard="Numeric" Placeholder="84" />
+                <Entry Grid.Row="9" Grid.Column="1" Text="{Binding TotalCartas}" Keyboard="Numeric" Placeholder="120" />
+                <Label Grid.Row="10" Grid.Column="0" Text="{Binding ErroTotalPrincipal}" Style="{StaticResource Erro}" />
+                <Label Grid.Row="10" Grid.Column="1" Text="{Binding ErroTotalCartas}" Style="{StaticResource Erro}" />
+
+                <VerticalStackLayout Grid.Row="11" Grid.ColumnSpan="2">
+                    <Label Text="Data de lançamento" Style="{StaticResource Campo}" />
+                    <DatePicker Date="{Binding DataLancamento}" Format="dd/MM/yyyy" HorizontalOptions="Start" />
+                </VerticalStackLayout>
+
+                <HorizontalStackLayout Grid.Row="12" Grid.ColumnSpan="2" Margin="0,8,0,16">
+                    <CheckBox IsChecked="{Binding Favorita}" VerticalOptions="Center" />
+                    <Label Text="Favorita (aparece no Início)" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <!-- O Salvar fica desabilitado enquanto houver erro (CanExecute do SalvarCommand) -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="16">
+            <Button Grid.Column="0" Text="Cancelar" Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />
+            <Button Grid.Column="1" Text="Salvar" Command="{Binding SalvarCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

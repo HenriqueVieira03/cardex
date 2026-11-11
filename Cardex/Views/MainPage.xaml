@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Página raiz do app.
+  FlyoutPage = menu lateral (Flyout) + área principal (Detail).
+  O Detail é uma NavigationPage, que dá a barra superior, o botão de menu e o "voltar".
+  Os dois são definidos no construtor (MainPage.xaml.cs), vindos da injeção de dependência.
+-->
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="Cardex.Views.MainPage"
+            FlyoutLayoutBehavior="Popover" />

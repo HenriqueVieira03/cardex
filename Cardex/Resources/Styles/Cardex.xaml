@@ -84,6 +84,12 @@
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
     </Style>
 
+    <!-- Linha de lista: precisa de fundo próprio para o SwipeView não deixar ver as ações por trás -->
+    <Style TargetType="Grid" x:Key="LinhaLista">
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+    </Style>
+
     <!-- Ações do SwipeView -->
     <Style TargetType="SwipeItem" x:Key="SwipeEditar">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />

@@ -32,11 +32,25 @@ public static class MauiProgram
 		builder.Services.AddSingleton<ColecaoDao>();
 		builder.Services.AddSingleton<CartaDao>();
 		builder.Services.AddSingleton<ExemplarDao>();
+
 		builder.Services.AddSingleton<SeedService>();
+		builder.Services.AddSingleton<ProgressoService>();
+		builder.Services.AddSingleton<NavegacaoService>();
+		builder.Services.AddSingleton<IAlertaService, AlertaService>(); // pede a interface, recebe a implementação
 
 		// Transient: uma instância nova cada vez que a tela é aberta.
-		builder.Services.AddTransient<StatusViewModel>();
-		builder.Services.AddTransient<StatusPage>();
+		builder.Services.AddTransient<MenuViewModel>();
+		builder.Services.AddTransient<InicioViewModel>();
+		builder.Services.AddTransient<ColecoesViewModel>();
+		builder.Services.AddTransient<ColecaoFormViewModel>();
+
+		builder.Services.AddSingleton<MainPage>(); // a raiz existe uma vez só
+		builder.Services.AddTransient<MenuPage>();
+		builder.Services.AddTransient<InicioPage>();
+		builder.Services.AddTransient<ColecoesPage>();
+		builder.Services.AddTransient<ColecaoFormPage>();
+		builder.Services.AddTransient<MinhasCartasPage>();
+		builder.Services.AddTransient<SobrePage>();
 
 		return builder.Build();
 	}

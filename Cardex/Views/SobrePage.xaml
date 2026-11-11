@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Tela estática: não precisa de ViewModel. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cardex.Views.SobrePage"
+             Title="Sobre">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Cardex" Style="{StaticResource Titulo}" />
+            <Label Text="Um fichário digital para a sua coleção de Pokémon Estampas Ilustradas: cadastre coleções e cartas, registre os exemplares que você tem (variante, condição, idioma e quantidade), veja o que falta para completar cada coleção e quais cartas estão repetidas para troca." />
+
+            <Label Text="Dados das cartas" Style="{StaticResource Secao}" />
+            <Label Text="Os nomes, raridades, variantes e imagens das cartas vêm da TCGdex (tcgdex.dev), uma base de dados aberta e mantida pela comunidade." />
+
+            <Label Text="Trabalho acadêmico" Style="{StaticResource Secao}" />
+            <Label Text="Trabalho final da disciplina de Desenvolvimento Mobile, feito em .NET MAUI com C#, XAML, MVVM e SQLite." />
+
+            <Border Style="{StaticResource Cartao}" Margin="0,12,0,0">
+                <Label Style="{StaticResource Secundario}"
+                       Text="Cardex é um app não oficial, feito como trabalho acadêmico, sem relação com a The Pokémon Company, Nintendo, Creatures ou GAME FREAK. Pokémon e os nomes e imagens das cartas pertencem aos seus donos. Dados das cartas: TCGdex." />
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

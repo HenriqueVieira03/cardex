@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.ColecoesPage"
+             x:DataType="vm:ColecoesViewModel"
+             Title="Coleções">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Filtro em tempo real: o Text está ligado a TextoBusca, que filtra a cada letra -->
+        <SearchBar Grid.Row="0"
+                   Text="{Binding TextoBusca}"
+                   Placeholder="Buscar por nome ou código" />
+
+        <!-- ListView: cada linha é uma ViewCell com SwipeView (arrastar para Editar / Excluir) -->
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding Itens}"
+                  HasUnevenRows="True"
+                  SelectionMode="None">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="vm:ColecaoItem">
+                    <ViewCell>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <!-- O comando está no ViewModel da página, não no item:
+                                         RelativeSource procura o ColecoesViewModel nos "pais" da linha -->
+                                    <SwipeItem Text="Editar"
+                                               Style="{StaticResource SwipeEditar}"
+                                               Command="{Binding EditarCommand, Source={RelativeSource AncestorType={x:Type vm:ColecoesViewModel}}, x:DataType=vm:ColecoesViewModel}"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Excluir"
+                                               Style="{StaticResource SwipeExcluir}"
+                                               Command="{Binding ExcluirCommand, Source={RelativeSource AncestorType={x:Type vm:ColecoesViewModel}}, x:DataType=vm:ColecoesViewModel}"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Grid Style="{StaticResource LinhaLista}" ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding AbrirCommand, Source={RelativeSource AncestorType={x:Type vm:ColecoesViewModel}}, x:DataType=vm:ColecoesViewModel}"
+                                        CommandParameter="{Binding .}" />
+                                </Grid.GestureRecognizers>
+
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Nome}" FontSize="16" LineBreakMode="TailTruncation" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Codigo}" Style="{StaticResource Secundario}" />
+                                <Label Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Text="{Binding Progresso}"
+                                       VerticalOptions="Center" FontFamily="OpenSansSemibold" />
+                            </Grid>
+                        </SwipeView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Estado vazio (a ListView não tem EmptyView, então fica um Label por cima) -->
+        <Label Grid.Row="1"
+               Text="{Binding MensagemVazia}"
+               Style="{StaticResource Vazio}"
+               IsVisible="{Binding SemResultados}" />
+
+        <VerticalStackLayout Grid.Row="2" Padding="16,4,16,16" Spacing="8">
+            <Label Text="Dica: arraste uma coleção para a esquerda para editar ou excluir."
+                   Style="{StaticResource Secundario}" HorizontalOptions="Center" />
+            <Button Text="+ Nova coleção" Command="{Binding NovaCommand}" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

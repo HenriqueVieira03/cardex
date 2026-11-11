@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.InicioPage"
+             x:DataType="vm:InicioViewModel"
+             Title="Início">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <ActivityIndicator IsRunning="{Binding Carregando}" IsVisible="{Binding Carregando}" />
+
+            <!-- Cartão da coleção favorita, com os três níveis de progresso -->
+            <Border Style="{StaticResource Cartao}" IsVisible="{Binding TemFavorita}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="★ Coleção favorita" Style="{StaticResource Secundario}" />
+                    <Label Text="{Binding NomeFavorita}" Style="{StaticResource Titulo}" />
+                    <Label Text="{Binding CartasUnicasFavorita}" />
+
+                    <Grid ColumnDefinitions="*,Auto" Margin="0,8,0,0">
+                        <Label Text="Set base" />
+                        <Label Grid.Column="1" Text="{Binding ProgressoBase.Texto}" />
+                    </Grid>
+                    <ProgressBar Progress="{Binding ProgressoBase.Fracao}" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Set completo" />
+                        <Label Grid.Column="1" Text="{Binding ProgressoCompleto.Texto}" />
+                    </Grid>
+                    <ProgressBar Progress="{Binding ProgressoCompleto.Fracao}" />
+
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Master set" />
+                        <Label Grid.Column="1" Text="{Binding ProgressoMaster.Texto}" />
+                    </Grid>
+                    <ProgressBar Progress="{Binding ProgressoMaster.Fracao}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Nenhuma coleção favorita. Marque uma no formulário da coleção."
+                   Style="{StaticResource Vazio}"
+                   IsVisible="{Binding TemFavorita, Converter={StaticResource InverterBool}}" />
+
+            <!-- Atalhos em Grid 2x2 -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Button Grid.Row="0" Grid.Column="0" Text="Coleções" Style="{StaticResource Atalho}" Command="{Binding AbrirColecoesCommand}" />
+                <Button Grid.Row="0" Grid.Column="1" Text="Minhas cartas" Style="{StaticResource Atalho}" Command="{Binding AbrirMinhasCartasCommand}" />
+                <Button Grid.Row="1" Grid.Column="0" Text="Repetidas" Style="{StaticResource Atalho}" Command="{Binding AbrirRepetidasCommand}" />
+                <Button Grid.Row="1" Grid.Column="1" Text="+ Nova coleção" Style="{StaticResource Atalho}" Command="{Binding NovaColecaoCommand}" />
+            </Grid>
+
+            <!-- Resumo geral -->
+            <Label Text="Resumo" Style="{StaticResource Secao}" />
+            <Grid ColumnDefinitions="*,*,*">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
+                    <Label Text="{Binding TotalExemplares}" Style="{StaticResource Titulo}" HorizontalOptions="Center" />
+                    <Label Text="exemplares" Style="{StaticResource Secundario}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
+                    <Label Text="{Binding CartasUnicas}" Style="{StaticResource Titulo}" HorizontalOptions="Center" />
+                    <Label Text="cartas únicas" Style="{StaticResource Secundario}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
+                    <Label Text="{Binding Repetidas}" Style="{StaticResource Titulo}" HorizontalOptions="Center" />
+                    <Label Text="repetidas" Style="{StaticResource Secundario}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

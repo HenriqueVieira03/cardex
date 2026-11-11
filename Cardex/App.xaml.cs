@@ -4,18 +4,18 @@ namespace Cardex;
 
 public partial class App : Application
 {
-	private readonly StatusPage _paginaInicial;
+	private readonly IServiceProvider _servicos;
 
-	// A página chega pela injeção de dependência (com o ViewModel e os DAOs já resolvidos).
-	public App(StatusPage paginaInicial)
+	public App(IServiceProvider servicos)
 	{
-		InitializeComponent();
-		_paginaInicial = paginaInicial;
+		InitializeComponent(); // carrega os recursos do App.xaml (cores, estilos, converters)
+		_servicos = servicos;
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		// Provisório: a navegação (FlyoutPage/NavigationPage) entra na etapa 2.
-		return new Window(_paginaInicial);
+		// A MainPage é pedida aqui, e não no construtor: as páginas usam {StaticResource ...}
+		// e esses recursos só existem depois do InitializeComponent() acima.
+		return new Window(_servicos.GetRequiredService<MainPage>());
 	}
 }
