@@ -15,6 +15,17 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
   </ItemGroup>
 
+  <!--
+    O app MAUI compila para Android/iOS/Windows e não pode ser referenciado por um
+    projeto de teste comum. Por isso incluímos (por link) só os arquivos que não
+    dependem de UI: Models e Data. Eles são os mesmos arquivos do app, não cópias.
+  -->
+  <ItemGroup>
+    <Compile Include="..\Cardex\Models\*.cs" Link="App\Models\%(Filename)%(Extension)" />
+    <Compile Include="..\Cardex\Data\*.cs" Link="App\Data\%(Filename)%(Extension)" />
+    <None Include="..\Cardex\Resources\Raw\me05.json" Link="App\me05.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
