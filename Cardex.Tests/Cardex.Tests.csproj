@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="..\Cardex\Models\*.cs" Link="App\Models\%(Filename)%(Extension)" />
     <Compile Include="..\Cardex\Data\*.cs" Link="App\Data\%(Filename)%(Extension)" />
+    <Compile Include="..\Cardex\Services\ProgressoService.cs" Link="App\Services\ProgressoService.cs" />
     <None Include="..\Cardex\Resources\Raw\me05.json" Link="App\me05.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
