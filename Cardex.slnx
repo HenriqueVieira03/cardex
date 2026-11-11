@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/tools/">
+    <Project Path="tools/CatalogBuilder/CatalogBuilder.csproj" />
+  </Folder>
+  <Project Path="Cardex.Tests/Cardex.Tests.csproj" />
+  <Project Path="Cardex/Cardex.csproj" />
+</Solution>
