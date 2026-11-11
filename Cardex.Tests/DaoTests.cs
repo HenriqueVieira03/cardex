@@ -122,6 +122,18 @@ public class DaoTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task Editar_TotalPrincipal_recalcula_as_secretas()
+    {
+        var carta = await NovaCartaAsync(80);
+        Assert.False((await _cartaDao.ObterPorIdAsync(carta.Id))!.EhSecreta);
+
+        _colecao.TotalPrincipal = 70;
+        await _colecaoDao.AtualizarAsync(_colecao);
+
+        Assert.True((await _cartaDao.ObterPorIdAsync(carta.Id))!.EhSecreta);
+    }
+
+    [Fact]
     public async Task CodigoExiste_ignora_a_propria_colecao_na_edicao()
     {
         Assert.True(await _colecaoDao.CodigoExisteAsync("TST"));

@@ -47,7 +47,15 @@ public class ColecaoDao : DaoBase<Colecao>
     {
         if (item.Favorita)
             await DesmarcarFavoritasAsync();
-        return await base.AtualizarAsync(item);
+        int alterados = await base.AtualizarAsync(item);
+
+        // Se o TotalPrincipal mudou, as cartas secretas mudam também.
+        // Mesma regra de Carta.CalcularSecreta: não é promo e Numero > TotalPrincipal.
+        var conexao = await Database.ObterConexaoAsync();
+        await conexao.ExecuteAsync(
+            "UPDATE Cartas SET EhSecreta = (EhPromo = 0 AND Numero > ?) WHERE ColecaoId = ?",
+            item.TotalPrincipal, item.Id);
+        return alterados;
     }
 
     private async Task DesmarcarFavoritasAsync()
