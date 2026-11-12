@@ -55,11 +55,20 @@ public class NavegacaoService
         return Navegacao.PopModalAsync();
     }
 
+    // Volta uma página na pilha (ex.: depois de excluir a carta que estava aberta).
+    public Task VoltarAsync()
+    {
+        return Navegacao.PopAsync();
+    }
+
     // Pede a página ao container de DI (que já injeta o ViewModel) e entrega o parâmetro.
+    // Quem recebe é o ViewModel da página ou, numa TabbedPage, a própria página (que repassa às abas).
     private async Task<TPagina> CriarAsync<TPagina>(object? parametro) where TPagina : Page
     {
         var pagina = _servicos.GetRequiredService<TPagina>();
-        if (pagina.BindingContext is IRecebeParametro vm)
+        if (pagina is IRecebeParametro paginaQueRecebe)
+            await paginaQueRecebe.ReceberParametroAsync(parametro);
+        else if (pagina.BindingContext is IRecebeParametro vm)
             await vm.ReceberParametroAsync(parametro);
         return pagina;
     }

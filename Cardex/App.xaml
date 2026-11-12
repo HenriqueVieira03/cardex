@@ -13,6 +13,7 @@
 
             <!-- Converters disponíveis em todas as telas -->
             <conv:InverterBoolConverter x:Key="InverterBool" />
+            <conv:BoolParaOpacidadeConverter x:Key="BoolParaOpacidade" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

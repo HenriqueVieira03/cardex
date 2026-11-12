@@ -90,6 +90,41 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
     </Style>
 
+    <!-- Fichário: bolso da carta (fundo usado quando não há imagem) -->
+    <Style TargetType="Border" x:Key="Bolso">
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 6" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
+    </Style>
+
+    <!-- Selo "x2" no canto da carta -->
+    <Style TargetType="Border" x:Key="Selo">
+        <Setter Property="Padding" Value="6,1" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 8" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <!-- Faixa com número e nome da carta que falta -->
+    <Style TargetType="Label" x:Key="LegendaCarta">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Padding" Value="4,2" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="TextColor" Value="{StaticResource White}" />
+        <Setter Property="BackgroundColor" Value="#99000000" />
+    </Style>
+
+    <!-- Indicador de variante (Normal / Foil / Reverse) no detalhe da carta -->
+    <Style TargetType="Border" x:Key="Chip">
+        <Setter Property="Padding" Value="10,4" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+
     <!-- Ações do SwipeView -->
     <Style TargetType="SwipeItem" x:Key="SwipeEditar">
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
