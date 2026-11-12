@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  TabbedPage: uma página com abas. Cada aba é uma ContentPage (Fichário, Repetidas, Estatísticas),
+  adicionada no construtor (ColecaoPage.xaml.cs) a partir da injeção de dependência.
+  O texto de cada aba é o Title da página filha.
+-->
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="Cardex.Views.ColecaoPage"
+            Title="Coleção" />

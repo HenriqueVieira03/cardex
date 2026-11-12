@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Formulário modal de carta. Serve para criar (promo/personalizada) e para editar. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             xmlns:m="clr-namespace:Cardex.Models"
+             x:Class="Cardex.Views.CartaFormPage"
+             x:DataType="vm:CartaFormViewModel"
+             Title="{Binding Titulo}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <Label Grid.Row="0" Text="{Binding Titulo}" Style="{StaticResource Titulo}" Margin="16,24,16,8" />
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,0" Spacing="2">
+
+                <!-- Pré-visualização da imagem + número ao lado -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+                    <Grid WidthRequest="100" HeightRequest="140">
+                        <Border Style="{StaticResource Bolso}">
+                            <Label Text="sem imagem" Style="{StaticResource Secundario}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Image Aspect="AspectFit">
+                            <Image.Source>
+                                <UriImageSource Uri="{Binding PreVisualizacao}" CachingEnabled="True" CacheValidity="30.00:00:00" />
+                            </Image.Source>
+                        </Image>
+                    </Grid>
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="Número *" Style="{StaticResource Campo}" />
+                        <Entry Text="{Binding Numero}" Keyboard="Numeric" Placeholder="121" />
+                        <Label Text="{Binding ErroNumero}" Style="{StaticResource Erro}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Label Text="Nome *" Style="{StaticResource Campo}" />
+                <Entry Text="{Binding Nome}" Placeholder="Zarude" />
+                <Label Text="{Binding ErroNome}" Style="{StaticResource Erro}" />
+
+                <Label Text="Raridade" Style="{StaticResource Campo}" />
+                <Picker ItemsSource="{Binding Raridades}"
+                        ItemDisplayBinding="{Binding Nome, x:DataType=vm:OpcaoRaridade}"
+                        SelectedItem="{Binding Raridade}"
+                        Title="Escolha a raridade" />
+
+                <Label Text="Tipo" Style="{StaticResource Campo}" />
+                <HorizontalStackLayout RadioButtonGroup.GroupName="tipo"
+                                       RadioButtonGroup.SelectedValue="{Binding Tipo}">
+                    <RadioButton Content="Pokémon" Value="{x:Static m:TipoCarta.Pokemon}" />
+                    <RadioButton Content="Treinador" Value="{x:Static m:TipoCarta.Treinador}" />
+                    <RadioButton Content="Energia" Value="{x:Static m:TipoCarta.Energia}" />
+                </HorizontalStackLayout>
+
+                <Label Text="Variantes que existem *" Style="{StaticResource Campo}" />
+                <Grid ColumnDefinitions="Auto,*,Auto,*,Auto,*" >
+                    <CheckBox Grid.Column="0" IsChecked="{Binding TemNormal}" />
+                    <Label Grid.Column="1" Text="Normal" VerticalOptions="Center" />
+                    <CheckBox Grid.Column="2" IsChecked="{Binding TemFoil}" />
+                    <Label Grid.Column="3" Text="Tem foil" VerticalOptions="Center" />
+                    <CheckBox Grid.Column="4" IsChecked="{Binding TemReverse}" />
+                    <Label Grid.Column="5" Text="Tem reverse" VerticalOptions="Center" />
+                </Grid>
+                <Label Text="{Binding ErroVariantes}" Style="{StaticResource Erro}" />
+
+                <HorizontalStackLayout>
+                    <CheckBox IsChecked="{Binding EhPromo}" />
+                    <Label Text="É promo (numeração própria, fica no grupo Promos)" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+
+                <Label Text="URL da imagem" Style="{StaticResource Campo}" />
+                <Entry Text="{Binding ImagemUrl}" Keyboard="Url" Placeholder="https://..." />
+                <Label Text="{Binding ErroImagem}" Style="{StaticResource Erro}" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="16">
+            <Button Grid.Column="0" Text="Cancelar" Style="{StaticResource BotaoSecundario}" Command="{Binding CancelarCommand}" />
+            <Button Grid.Column="1" Text="Salvar" Command="{Binding SalvarCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

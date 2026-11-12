@@ -104,10 +104,7 @@ public partial class ColecoesViewModel : ObservableObject
         await CarregarAsync();
     }
 
+    // Abre a Coleção (TabbedPage: Fichário · Repetidas · Estatísticas) com push.
     [RelayCommand]
-    private Task AbrirAsync(ColecaoItem item)
-    {
-        // A Coleção (TabbedPage: Fichário · Repetidas · Estatísticas) chega na etapa 3.
-        return _alerta.MostrarToastAsync($"O fichário de {item.Codigo} chega na etapa 3.");
-    }
+    private Task AbrirAsync(ColecaoItem item) => _navegacao.IrParaAsync<ColecaoPage>(item.Colecao.Id);
 }

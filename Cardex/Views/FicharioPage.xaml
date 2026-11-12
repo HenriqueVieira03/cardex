@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.FicharioPage"
+             x:DataType="vm:FicharioViewModel"
+             Title="Fichário">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <SearchBar Grid.Row="0" Text="{Binding TextoBusca}" Placeholder="Nome ou número (ex.: 45)" />
+
+        <!-- RadioButtons agrupados: o SelectedValue do grupo vai para a propriedade Situacao -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,Auto,Auto,*" Padding="8,0"
+              RadioButtonGroup.GroupName="situacao"
+              RadioButtonGroup.SelectedValue="{Binding Situacao}">
+            <RadioButton Grid.Column="0" Content="Todas" Value="Todas" IsChecked="True" />
+            <RadioButton Grid.Column="1" Content="Tenho" Value="Tenho" />
+            <RadioButton Grid.Column="2" Content="Faltam" Value="Faltam" />
+            <Label Grid.Column="3" Text="{Binding Resumo}" Style="{StaticResource Secundario}"
+                   HorizontalOptions="End" VerticalOptions="Center" Margin="0,0,8,0" />
+        </Grid>
+
+        <!-- Fichário: CollectionView em grade de 3 colunas, agrupada (principal · secret rares · promos) -->
+        <CollectionView x:Name="Grade"
+                        Grid.Row="2"
+                        ItemsSource="{Binding Grupos}"
+                        IsGrouped="True"
+                        SelectionMode="None"
+                        Margin="8,0">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="8" VerticalItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="vm:GrupoCartas">
+                    <Label Text="{Binding Titulo}" Style="{StaticResource Secao}" Margin="0,12,0,4" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:CartaFichario">
+                    <!-- Altura calculada pela largura da tela, para manter a proporção 63 × 88 -->
+                    <Grid HeightRequest="{Binding AlturaCarta, Source={RelativeSource AncestorType={x:Type vm:FicharioViewModel}}, x:DataType=vm:FicharioViewModel}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding AbrirCartaCommand, Source={RelativeSource AncestorType={x:Type vm:FicharioViewModel}}, x:DataType=vm:FicharioViewModel}"
+                                CommandParameter="{Binding .}" />
+                        </Grid.GestureRecognizers>
+
+                        <!-- Carta = cartão de reserva + imagem por cima. O conjunto fica esmaecido
+                             quando eu ainda não tenho a carta (converter bool → opacidade). -->
+                        <Grid Opacity="{Binding Tenho, Converter={StaticResource BoolParaOpacidade}}">
+                            <!-- 1) Cartão de reserva: só aparece se a imagem não carregar (sem internet e sem cache) -->
+                            <Border Style="{StaticResource Bolso}">
+                                <VerticalStackLayout VerticalOptions="Center" Padding="6" Spacing="2">
+                                    <Label Text="{Binding Numero}" FontFamily="OpenSansSemibold" HorizontalOptions="Center" />
+                                    <Label Text="{Binding Nome}" FontSize="12" HorizontalTextAlignment="Center" />
+                                    <Label Text="{Binding Raridade}" FontSize="10" Style="{StaticResource Secundario}" HorizontalTextAlignment="Center" />
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- 2) Imagem oficial, com cache; por ser opaca, cobre o cartão de reserva -->
+                            <Image Aspect="AspectFit">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding ImagemUrl}" CachingEnabled="True" CacheValidity="30.00:00:00" />
+                                </Image.Source>
+                            </Image>
+                        </Grid>
+
+                        <!-- 3) Número e nome por cima, só para a carta que falta -->
+                        <Label Style="{StaticResource LegendaCarta}"
+                               IsVisible="{Binding Tenho, Converter={StaticResource InverterBool}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Numero}" FontFamily="OpenSansSemibold" />
+                                    <Span Text=" " />
+                                    <Span Text="{Binding Nome}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <!-- 4) Selo de quantidade quando tenho mais de uma -->
+                        <Border Style="{StaticResource Selo}" IsVisible="{Binding MostrarSelo}">
+                            <Label Text="{Binding Selo}" FontSize="11" TextColor="{StaticResource White}" />
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Nenhuma carta encontrada com esse filtro." Style="{StaticResource Vazio}" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <Button Grid.Row="3" Text="+ Promo ou carta personalizada" Command="{Binding NovaCartaCommand}" Margin="16,8,16,16" />
+    </Grid>
+</ContentPage>

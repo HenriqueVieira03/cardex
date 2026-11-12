@@ -43,12 +43,21 @@ public static class MauiProgram
 		builder.Services.AddTransient<InicioViewModel>();
 		builder.Services.AddTransient<ColecoesViewModel>();
 		builder.Services.AddTransient<ColecaoFormViewModel>();
+		builder.Services.AddTransient<FicharioViewModel>();
+		builder.Services.AddTransient<CartaDetalheViewModel>();
+		builder.Services.AddTransient<CartaFormViewModel>();
 
 		builder.Services.AddSingleton<MainPage>(); // a raiz existe uma vez só
 		builder.Services.AddTransient<MenuPage>();
 		builder.Services.AddTransient<InicioPage>();
 		builder.Services.AddTransient<ColecoesPage>();
 		builder.Services.AddTransient<ColecaoFormPage>();
+		builder.Services.AddTransient<ColecaoPage>();       // TabbedPage com as três abas abaixo
+		builder.Services.AddTransient<FicharioPage>();
+		builder.Services.AddTransient<RepetidasPage>();
+		builder.Services.AddTransient<EstatisticasPage>();
+		builder.Services.AddTransient<CartaDetalhePage>();
+		builder.Services.AddTransient<CartaFormPage>();
 		builder.Services.AddTransient<MinhasCartasPage>();
 		builder.Services.AddTransient<SobrePage>();
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Aba Repetidas: provisória; a lista com o botão Compartilhar chega na etapa 5. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cardex.Views.RepetidasPage"
+             Title="Repetidas">
+
+    <Label Text="Nenhuma repetida ainda. (A lista completa chega na etapa 5.)"
+           Style="{StaticResource Vazio}" VerticalOptions="Center" />
+</ContentPage>

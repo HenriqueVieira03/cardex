@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Cardex.ViewModels"
+             x:Class="Cardex.Views.CartaDetalhePage"
+             x:DataType="vm:CartaDetalheViewModel"
+             Title="{Binding Titulo}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <!-- Imagem grande (63 × 88). Sem imagem, fica o cartão com número e nome por baixo. -->
+            <Grid WidthRequest="252" HeightRequest="352" HorizontalOptions="Center">
+                <Border Style="{StaticResource Bolso}">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="4">
+                        <Label Text="{Binding Numero}" FontSize="20" FontFamily="OpenSansSemibold" HorizontalOptions="Center" />
+                        <Label Text="{Binding Nome}" HorizontalOptions="Center" />
+                        <Label Text="{Binding Raridade}" Style="{StaticResource Secundario}" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+                <Image Aspect="AspectFit">
+                    <Image.Source>
+                        <UriImageSource Uri="{Binding ImagemUrl}" CachingEnabled="True" CacheValidity="30.00:00:00" />
+                    </Image.Source>
+                </Image>
+            </Grid>
+
+            <Label Text="{Binding Nome}" Style="{StaticResource Titulo}" HorizontalOptions="Center" />
+
+            <!-- Ficha da carta em Grid de 2 colunas -->
+            <Border Style="{StaticResource Cartao}">
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="6">
+                    <Label Grid.Row="0" Text="Número" Style="{StaticResource Secundario}" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Numero}" />
+                    <Label Grid.Row="1" Text="Raridade" Style="{StaticResource Secundario}" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Raridade}" />
+                    <Label Grid.Row="2" Text="Tipo" Style="{StaticResource Secundario}" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding Tipo}" />
+                </Grid>
+            </Border>
+
+            <!-- Variantes que existem; "✓" nas que eu tenho -->
+            <Label Text="Variantes" Style="{StaticResource Secao}" />
+            <HorizontalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Variantes}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:VarianteInfo">
+                        <Border Style="{StaticResource Chip}" Opacity="{Binding Tenho, Converter={StaticResource BoolParaOpacidade}}">
+                            <Label Text="{Binding Texto}" />
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+
+            <!-- Meus exemplares (adicionar/editar chegam na etapa 4) -->
+            <Label Text="Meus exemplares" Style="{StaticResource Secao}" />
+            <VerticalStackLayout BindableLayout.ItemsSource="{Binding Exemplares}" Spacing="6">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ExemplarItem">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding Descricao}" />
+                            <Label Grid.Column="1" Text="{Binding Quantidade}" FontFamily="OpenSansSemibold" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+            <Label Text="Você ainda não tem esta carta." Style="{StaticResource Secundario}" IsVisible="{Binding SemExemplares}" />
+
+            <Label Text="{Binding Origem}" Style="{StaticResource Secundario}" Margin="0,12,0,0" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Button Grid.Column="0" Text="Editar carta" Style="{StaticResource BotaoSecundario}" Command="{Binding EditarCartaCommand}" />
+                <Button Grid.Column="1" Text="Excluir carta" Style="{StaticResource BotaoPerigo}" Command="{Binding ExcluirCartaCommand}"
+                        IsVisible="{Binding PodeExcluir}" />
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
