@@ -97,6 +97,15 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray600}}" />
     </Style>
 
+    <!-- Véu sobre a carta que falta: cor do fundo da página, semitransparente.
+         O BackgroundColor precisa ser definido aqui porque o estilo implícito de BoxView
+         (Styles.xaml) também é aplicado e pintaria o fundo de cinza-escuro. -->
+    <Style TargetType="BoxView" x:Key="VeuCarta">
+        <Setter Property="Opacity" Value="0.65" />
+        <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+    </Style>
+
     <!-- Selo "x2" no canto da carta -->
     <Style TargetType="Border" x:Key="Selo">
         <Setter Property="Padding" Value="6,1" />

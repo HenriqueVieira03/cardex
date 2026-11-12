@@ -48,27 +48,28 @@
                                 CommandParameter="{Binding .}" />
                         </Grid.GestureRecognizers>
 
-                        <!-- Carta = cartão de reserva + imagem por cima. O conjunto fica esmaecido
-                             quando eu ainda não tenho a carta (converter bool → opacidade). -->
-                        <Grid Opacity="{Binding Tenho, Converter={StaticResource BoolParaOpacidade}}">
-                            <!-- 1) Cartão de reserva: só aparece se a imagem não carregar (sem internet e sem cache) -->
-                            <Border Style="{StaticResource Bolso}">
-                                <VerticalStackLayout VerticalOptions="Center" Padding="6" Spacing="2">
-                                    <Label Text="{Binding Numero}" FontFamily="OpenSansSemibold" HorizontalOptions="Center" />
-                                    <Label Text="{Binding Nome}" FontSize="12" HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Raridade}" FontSize="10" Style="{StaticResource Secundario}" HorizontalTextAlignment="Center" />
-                                </VerticalStackLayout>
-                            </Border>
+                        <!-- 1) Cartão de reserva: fica por baixo e só aparece se a imagem não carregar
+                                (sem internet e sem cache) -->
+                        <Border Style="{StaticResource Bolso}">
+                            <VerticalStackLayout VerticalOptions="Center" Padding="6" Spacing="2">
+                                <Label Text="{Binding Numero}" FontFamily="OpenSansSemibold" HorizontalOptions="Center" />
+                                <Label Text="{Binding Nome}" FontSize="12" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding Raridade}" FontSize="10" Style="{StaticResource Secundario}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
 
-                            <!-- 2) Imagem oficial, com cache; por ser opaca, cobre o cartão de reserva -->
-                            <Image Aspect="AspectFit">
-                                <Image.Source>
-                                    <UriImageSource Uri="{Binding ImagemUrl}" CachingEnabled="True" CacheValidity="30.00:00:00" />
-                                </Image.Source>
-                            </Image>
-                        </Grid>
+                        <!-- 2) Imagem oficial, com cache. É opaca, então cobre o cartão de reserva -->
+                        <Image Aspect="Fill">
+                            <Image.Source>
+                                <UriImageSource Uri="{Binding ImagemUrl}" CachingEnabled="True" CacheValidity="30.00:00:00" />
+                            </Image.Source>
+                        </Image>
 
-                        <!-- 3) Número e nome por cima, só para a carta que falta -->
+                        <!-- 3) Véu por cima da carta que falta: esmaece imagem ou cartão de reserva -->
+                        <BoxView Style="{StaticResource VeuCarta}"
+                                 IsVisible="{Binding Tenho, Converter={StaticResource InverterBool}}" />
+
+                        <!-- 4) Número e nome por cima, só para a carta que falta -->
                         <Label Style="{StaticResource LegendaCarta}"
                                IsVisible="{Binding Tenho, Converter={StaticResource InverterBool}}">
                             <Label.FormattedText>
@@ -80,7 +81,7 @@
                             </Label.FormattedText>
                         </Label>
 
-                        <!-- 4) Selo de quantidade quando tenho mais de uma -->
+                        <!-- 5) Selo de quantidade quando tenho mais de uma -->
                         <Border Style="{StaticResource Selo}" IsVisible="{Binding MostrarSelo}">
                             <Label Text="{Binding Selo}" FontSize="11" TextColor="{StaticResource White}" />
                         </Border>
