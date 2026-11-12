@@ -42,6 +42,12 @@ public class Carta
     [Ignore]
     public string NumeroFormatado => Numero.ToString("000");
 
+    // Versão leve da imagem para miniaturas (fichário e listas).
+    // A TCGdex tem duas qualidades: ".../high.webp" (~110 KB) e ".../low.webp" (~28 KB).
+    // Para URLs de outros sites, devolve a própria URL.
+    [Ignore]
+    public string? ImagemPequenaUrl => ImagemUrl?.Replace("/high.webp", "/low.webp");
+
     // Regra única usada pelo seed e pelo DAO ao salvar.
     // Promos têm numeração própria (ex.: MEP 088), então nunca são "secretas".
     public void CalcularSecreta(int totalPrincipal)
